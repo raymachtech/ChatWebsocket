@@ -35,6 +35,22 @@ module.exports = {
         }
     },
     
+    async softDeleteTopic(req,res,next){
+        try { 
+            const { userId, topicId} =req.query;
+            const {sql,pool} = DBInstance.connection();
+            let result = await pool.request()
+                    .input('UserId', sql.Int, userId)
+                    .input('TopicId', sql.Int, topicId)
+                    .execute('CrewMachCommunity.dbo.usp_Delete_Topic');
+            // console.dir(result);
+            let response = result.recordsets[0];
+            res.status(200).send({response});
+        } catch (error) {
+            console.log(error);
+        }
+    },
+    
     async getTopic(req,res,next){
         try { 
             const { userId } =req.query;

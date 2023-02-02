@@ -15,7 +15,7 @@ const chatRoom = require("./chatRoom.js");
 DbInstance.connect();
 
 const {
-  userInfo,addTopic,getTopic,getComment,insertComment,userInvite,getUserList
+  userInfo,addTopic,getTopic,softDeleteTopic,getComment,userInvite,getUserList
 } = require('./chatController.js');
 
 
@@ -23,6 +23,7 @@ app.get('/',(req,res)=>{ res.send("Welcome to websocket server")});
 
 app.get('/userInfo',userInfo);
 app.get('/addTopic',addTopic);
+app.get('softDeleteTopic',softDeleteTopic)
 app.get('/getTopic',getTopic);
 app.get('/getComment',getComment);
 app.get('/userInvite',userInvite);
