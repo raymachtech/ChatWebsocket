@@ -149,7 +149,7 @@ module.exports = {
             const { topicId } = req.query;
             let result = await pool.request()
                 .input('TopicID', sql.Int, topicId)
-                    .execute('CrewMachCommunity.dbo.usp_GetUserList');
+                    .execute('CrewMachCommunity.dbo.usp_GetInvitedUsersList');
             // console.dir(result);
             let response = result.recordsets[0];
             res.status(200).send({response});
@@ -160,11 +160,27 @@ module.exports = {
     async deleteInvitedUser(req,res,next){
         try { 
             const {sql,pool} = DBInstance.connection();
-            const { topicId } = req.query;
+            const { userIdList, topicId } = req.query;
             let result = await pool.request()
                     .input('TopicID', sql.Int, topicId)
                     .input('UserID', sql.VarChar, userIdList)
                     .execute('CrewMachCommunity.dbo.usp_DeleteInvitedUsers');
+            // console.dir(result);
+            let response = result.recordsets[0];
+            res.status(200).send({response});
+        } catch (error) {
+            console.log(error);
+        }
+    },
+    
+    async deleteChatHistory(req,res,next){
+        try { 
+            const {sql,pool} = DBInstance.connection();
+            const { userId, chatId } = req.query;
+            let result = await pool.request()
+                    .input('Id', sql.Int, chatId)
+                    .input('UserID', sql.VarChar, userId)
+                    .execute('CrewMachCommunity.dbo.usp_DeleteChatHistory');
             // console.dir(result);
             let response = result.recordsets[0];
             res.status(200).send({response});

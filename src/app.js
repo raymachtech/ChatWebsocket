@@ -16,7 +16,7 @@ DbInstance.connect();
 
 const {
   userInfo,addTopic,getTopic,softDeleteTopic,getComment,userInvite,getUserList,
-  getInvitedUserList
+  getInvitedUserList, deleteInvitedUser,deleteChatHistory
 } = require('./chatController.js');
 
 
@@ -30,6 +30,9 @@ app.get('/getComment',getComment);
 app.get('/userInvite',userInvite);
 app.get('/getUserList',getUserList);
 app.get('/getInvitedUserList',getInvitedUserList)
+app.get('/deleteInvitedUser',deleteInvitedUser)
+app.get('/deleteChatHistory',deleteChatHistory)
+
 
 
 wss.on('connection', socket => {
