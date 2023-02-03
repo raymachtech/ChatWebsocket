@@ -125,6 +125,7 @@ module.exports = {
             console.log(error);
         }
     },
+    // using in websocket
     async getUserTopics({userId}){
         try { 
             console.log("r2")
@@ -141,6 +142,37 @@ module.exports = {
             console.log(error);
         }
     },
+    
+    async getInvitedUserList(req,res,next){
+        try { 
+            const {sql,pool} = DBInstance.connection();
+            const { topicId } = req.query;
+            let result = await pool.request()
+                .input('TopicID', sql.Int, topicId)
+                    .execute('CrewMachCommunity.dbo.usp_GetUserList');
+            // console.dir(result);
+            let response = result.recordsets[0];
+            res.status(200).send({response});
+        } catch (error) {
+            console.log(error);
+        }
+    },
+    async deleteInvitedUser(req,res,next){
+        try { 
+            const {sql,pool} = DBInstance.connection();
+            const { topicId } = req.query;
+            let result = await pool.request()
+                    .input('TopicID', sql.Int, topicId)
+                    .input('UserID', sql.VarChar, userIdList)
+                    .execute('CrewMachCommunity.dbo.usp_DeleteInvitedUsers');
+            // console.dir(result);
+            let response = result.recordsets[0];
+            res.status(200).send({response});
+        } catch (error) {
+            console.log(error);
+        }
+    },
+
 
 
 };

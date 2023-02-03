@@ -15,7 +15,8 @@ const chatRoom = require("./chatRoom.js");
 DbInstance.connect();
 
 const {
-  userInfo,addTopic,getTopic,softDeleteTopic,getComment,userInvite,getUserList
+  userInfo,addTopic,getTopic,softDeleteTopic,getComment,userInvite,getUserList,
+  getInvitedUserList
 } = require('./chatController.js');
 
 
@@ -27,7 +28,8 @@ app.get('/softDeleteTopic',softDeleteTopic)
 app.get('/getTopic',getTopic);
 app.get('/getComment',getComment);
 app.get('/userInvite',userInvite);
-app.get('/getUserList',getUserList)
+app.get('/getUserList',getUserList);
+app.get('/getInvitedUserList',getInvitedUserList)
 
 
 wss.on('connection', socket => {
